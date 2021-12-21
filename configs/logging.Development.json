@@ -1,0 +1,29 @@
+{
+  "Serilog": {
+    "Using": ["Serilog.Sinks.Console"],
+    "MinimumLevel": "Debug",
+    "WriteTo": [
+      {
+        "Name": "Console",
+        "Args": {
+          "restrictedToMinimumLevel": "Debug"
+        }
+      },
+      {
+        "Name": "Seq",
+        "Args": {
+          "serverUrl": "http://masstransit.demo.seq:5341"
+        }
+      }
+    ],
+    "Enrich": [
+      "FromLogContext",
+      "WithMachineName",
+      "WithThreadId",
+      "WithThreadName"
+    ],
+    "Properties": {
+      "Application": "MassTransitDemo"
+    }
+  }
+}

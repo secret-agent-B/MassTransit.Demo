@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "MassTransit.Demo.Notifications": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

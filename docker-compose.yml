@@ -1,0 +1,74 @@
+version: '3.4'
+
+services:
+
+  masstransit.demo.customers:
+    image: masstransit.demo.customers
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: MassTransit.Demo.Customers/Dockerfile
+    ports:
+      - "5001:443"
+    volumes:
+      - ./configs:/app/configs:ro
+
+  masstransit.demo.orders:
+    image: masstransit.demo.orders
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: MassTransit.Demo.Orders/Dockerfile
+    ports:
+      - "5002:443"
+    volumes:
+      - ./configs:/app/configs:ro      
+
+  masstransit.demo.notifications:
+    image: masstransit.demo.notifications
+    restart: unless-stopped
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"
+    build:
+      context: .
+      dockerfile: MassTransit.Demo.Notifications/Dockerfile
+    volumes:
+      - ./configs:/app/configs:ro   
+
+  masstransit.demo.rabbitmq:
+    image: rabbitmq:3.8.11-management-alpine
+    container_name: masstransit.demo.rabbitmq
+    restart: unless-stopped
+    ports:
+      - "15672:15672"
+    volumes:
+      - masstransit-demo-rabbitmq:/var/lib/rabbitmq/mnesia
+
+  masstransit.demo.mongo:
+    image: mongo
+    container_name: masstransit.demo.mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"      
+
+  masstransit.demo.mongoclient:
+    image: mongoclient/mongoclient:4.0.0
+    container_name: masstransit.demo.mongoclient
+    restart: unless-stopped
+    ports:
+      - "5000:3000"
+    volumes:
+      - masstransit-demo-mongoclient:/data/db mongoclient/mongoclient
+
+  masstransit.demo.seq:
+    image: datalust/seq:latest
+    container_name: masstransit.demo.seq
+    restart: unless-stopped
+    ports:
+      - "5341:80"
+    environment:
+      - ACCEPT_EULA=Y
+
+volumes:
+  masstransit-demo-rabbitmq:
+  masstransit-demo-mongoclient:

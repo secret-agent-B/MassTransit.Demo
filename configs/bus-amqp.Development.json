@@ -1,0 +1,9 @@
+{
+  "ServiceBusConfiguration": {
+    "Host": "masstransit.demo.rabbitmq",
+    "Port": 15672,
+    "Username": "guest",
+    "Password": "guest",
+    "Heartbeat": 15
+  }
+}
