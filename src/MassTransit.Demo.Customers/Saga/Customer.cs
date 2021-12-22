@@ -14,7 +14,7 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public DateTime ActivationDate { get; set; }
+        public DateTime? ActivatedOn { get; set; }
 
         public string FirstName { get; set; }
 

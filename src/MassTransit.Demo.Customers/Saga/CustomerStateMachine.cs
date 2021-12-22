@@ -28,6 +28,7 @@
                         ctx.Instance.LastName = ctx.Data.LastName;
                         ctx.Instance.Email = ctx.Data.Email;
                         ctx.Instance.Phone = ctx.Data.Phone;
+                        ctx.Instance.CreatedOn = DateTime.UtcNow;
                     })
                     .TransitionTo(this.PendingActivation)
                     .PublishAsync(context => context.Init<CustomerRegisteredEvent>(
@@ -38,14 +39,14 @@
                             context.Data.LastName,
                             context.Data.Email,
                             context.Data.Phone,
-                            Created = DateTime.UtcNow
+                            context.Instance.CreatedOn
                         })));
 
             this.During(this.PendingActivation,
                 this.When(this.CustomerActivatedEvent)
                     .Then(ctx =>
                     {
-                        ctx.Instance.ActivationDate = DateTime.UtcNow;
+                        ctx.Instance.ActivatedOn = DateTime.UtcNow;
                     })
                     .TransitionTo(this.Active));
         }

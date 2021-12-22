@@ -12,6 +12,6 @@
 
         string Phone { get; }
 
-        DateTime Created { get; }
+        DateTime CreatedOn { get; }
     }
 }
