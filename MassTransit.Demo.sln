@@ -3,33 +3,33 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders", "MassTransit.Demo.Orders\MassTransit.Demo.Orders.csproj", "{B8F5452B-0BE0-4F62-BC53-C822463A2577}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders", "src\MassTransit.Demo.Orders\MassTransit.Demo.Orders.csproj", "{B8F5452B-0BE0-4F62-BC53-C822463A2577}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communication", "MassTransit.Demo.Communication\MassTransit.Demo.Communication.csproj", "{99DA38A1-A14C-4DEE-8307-EA831373AB8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communication", "src\MassTransit.Demo.Communication\MassTransit.Demo.Communication.csproj", "{99DA38A1-A14C-4DEE-8307-EA831373AB8C}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0C728D18-61C5-4C61-9A6E-CA4B20659CA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders.Contracts", "MassTransit.Demo.Orders.Contracts\MassTransit.Demo.Orders.Contracts.csproj", "{CB8273BC-F17F-4E42-951A-B08FCF039570}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders.Contracts", "src\MassTransit.Demo.Orders.Contracts\MassTransit.Demo.Orders.Contracts.csproj", "{CB8273BC-F17F-4E42-951A-B08FCF039570}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers.Contracts", "MassTransit.Demo.Customers.Contracts\MassTransit.Demo.Customers.Contracts.csproj", "{E66F607A-6D46-4866-B4CD-83CD8EFD9E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers.Contracts", "src\MassTransit.Demo.Customers.Contracts\MassTransit.Demo.Customers.Contracts.csproj", "{E66F607A-6D46-4866-B4CD-83CD8EFD9E89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers", "MassTransit.Demo.Customers\MassTransit.Demo.Customers.csproj", "{E82AD937-3FC5-4B75-A0AD-74BF90ABB03E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers", "src\MassTransit.Demo.Customers\MassTransit.Demo.Customers.csproj", "{E82AD937-3FC5-4B75-A0AD-74BF90ABB03E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communication.Tests", "MassTransit.Demo.Communication.Tests\MassTransit.Demo.Communication.Tests.csproj", "{3E71C31F-AE07-41E4-8242-9278C441E4F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communication.Tests", "src\MassTransit.Demo.Communication.Tests\MassTransit.Demo.Communication.Tests.csproj", "{3E71C31F-AE07-41E4-8242-9278C441E4F5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Orders", "Orders", "{FD191F63-B44C-441A-8461-2A3277F99932}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Customers", "Customers", "{5FB1B789-5C63-4E58-B2F9-7E945605E317}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers.Tests", "MassTransit.Demo.Customers.Tests\MassTransit.Demo.Customers.Tests.csproj", "{D479A174-67C1-434A-A604-69D454641E5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Customers.Tests", "src\MassTransit.Demo.Customers.Tests\MassTransit.Demo.Customers.Tests.csproj", "{D479A174-67C1-434A-A604-69D454641E5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders.Tests", "MassTransit.Demo.Orders.Tests\MassTransit.Demo.Orders.Tests.csproj", "{C2FF7286-3FA3-426C-B0A1-4A4858B4607B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Orders.Tests", "src\MassTransit.Demo.Orders.Tests\MassTransit.Demo.Orders.Tests.csproj", "{C2FF7286-3FA3-426C-B0A1-4A4858B4607B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedLib", "SharedLib", "{04490506-8A1F-4206-A7B0-F0BA1A5B7BEA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notifications", "Notifications", "{FBF6FC3C-968D-4888-B8AB-2924A8C6CC95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.Demo.Notifications", "MassTransit.Demo.Notifications\MassTransit.Demo.Notifications.csproj", "{C08970F2-0832-4764-9518-2B018082FBF4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MassTransit.Demo.Notifications", "src\MassTransit.Demo.Notifications\MassTransit.Demo.Notifications.csproj", "{C08970F2-0832-4764-9518-2B018082FBF4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

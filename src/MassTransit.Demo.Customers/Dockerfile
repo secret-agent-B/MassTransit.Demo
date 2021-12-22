@@ -7,10 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["MassTransit.Demo.Customers/MassTransit.Demo.Customers.csproj", "MassTransit.Demo.Customers/"]
-RUN dotnet restore "MassTransit.Demo.Customers/MassTransit.Demo.Customers.csproj"
+COPY ["src/MassTransit.Demo.Customers/MassTransit.Demo.Customers.csproj", "src/MassTransit.Demo.Customers/"]
+COPY ["src/MassTransit.Demo.Customers.Contracts/MassTransit.Demo.Customers.Contracts.csproj", "src/MassTransit.Demo.Customers.Contracts/"]
+COPY ["src/MassTransit.Demo.Communication/MassTransit.Demo.Communication.csproj", "src/MassTransit.Demo.Communication/"]
+RUN dotnet restore "src/MassTransit.Demo.Customers/MassTransit.Demo.Customers.csproj"
 COPY . .
-WORKDIR "/src/MassTransit.Demo.Customers"
+WORKDIR "/src/src/MassTransit.Demo.Customers"
 RUN dotnet build "MassTransit.Demo.Customers.csproj" -c Release -o /app/build
 
 FROM build AS publish
