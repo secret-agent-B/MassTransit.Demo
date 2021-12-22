@@ -16,7 +16,7 @@
         }
 
         [HttpPost("register")]
-        public async Task Register(Commands.CustomerRegistration.Command command, CancellationToken cancellationToken)
+        public async Task Register(CustomerRegistration.Command command, CancellationToken cancellationToken)
         {
             await this._bus.Publish<CustomerRegistrationEvent>(
                 new

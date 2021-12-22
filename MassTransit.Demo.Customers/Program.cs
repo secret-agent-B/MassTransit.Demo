@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using MassTransit;
 using MassTransit.Demo.Communication.Extensions;
 using MassTransit.Demo.Customers.Saga;
@@ -29,7 +30,9 @@ builder
 
                     BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
                 });
-    });
+    })
+    .AddMvc()
+    .AddFluentValidation();
 
 builder.Host
     .AddConfiguration()
