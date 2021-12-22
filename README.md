@@ -61,6 +61,5 @@ curl --location --request POST 'https://localhost:5001/customers/register' \
 Then after user registration, the account will be in a `PendingActivation` state. Use the curl command below to activate a user. **Do not forget t change the `<customer>` id to the new user's customer id.**
 
 ```
-curl --location --request GET 'https://localhost:5001/customers/activate/<customer-id>/test-activation' \
---data-raw ''
+curl --location --request GET 'https://localhost:5001/customers/activate/<customer-id>/test-activation'
 ```
