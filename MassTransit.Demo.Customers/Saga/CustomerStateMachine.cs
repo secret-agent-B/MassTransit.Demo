@@ -41,6 +41,10 @@
 
             this.During(this.PendingActivation,
                 this.When(this.CustomerActivatedEvent)
+                    .Then(ctx =>
+                    {
+                        ctx.Instance.LastUpdatedOn = DateTime.UtcNow;
+                    })
                     .TransitionTo(this.Active));
         }
 

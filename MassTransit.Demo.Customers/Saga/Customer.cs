@@ -14,6 +14,8 @@
 
         public DateTime CreatedOn { get; set; }
 
+        public DateTime LastUpdatedOn { get; set; }
+
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
