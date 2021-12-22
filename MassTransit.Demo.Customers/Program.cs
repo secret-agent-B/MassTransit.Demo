@@ -16,9 +16,9 @@ builder.Services.AddSwaggerGen();
 
 builder
     .Services
-    .AddMassTransitMiddleware(busConfig =>
+    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
     {
-        busConfig
+        serviceCollectionBusConfig
             .AddSagaStateMachine<CustomerStateMachine, Customer>()
             .MongoDbRepository(
                 cfg =>

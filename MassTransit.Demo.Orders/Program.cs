@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 builder
     .Services
-    .AddMassTransitMiddleware(busConfig =>
+    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
     {
     });
 

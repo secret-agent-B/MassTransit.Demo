@@ -10,9 +10,9 @@ builder
     .AddConfiguration()
     .ConfigureServices(services =>
     {
-        services.AddMassTransitMiddleware(busConfig =>
+        services.AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
         {
-            busConfig.AddConsumer<CustomerRegisteredConsumer>();
+            serviceCollectionBusConfig.AddConsumer<CustomerRegisteredConsumer>();
         });
     })
     .AddSerilog();

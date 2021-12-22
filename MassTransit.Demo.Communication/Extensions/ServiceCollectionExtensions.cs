@@ -8,14 +8,14 @@
     {
         public static IServiceCollection AddMassTransitMiddleware(
             this IServiceCollection services,
-            Action<IServiceCollectionBusConfigurator> busConfig)
+            Action<IServiceCollectionBusConfigurator, IConfiguration> busConfig)
         {
             services
-                .AddMassTransit(cfg =>
+                .AddMassTransit(serviceCollectionBusConfig =>
                 {
-                    cfg.SetKebabCaseEndpointNameFormatter();
+                    serviceCollectionBusConfig.SetKebabCaseEndpointNameFormatter();
 
-                    cfg.AddBus(ctx => Bus.Factory.CreateUsingRabbitMq(rmqCfg =>
+                    serviceCollectionBusConfig.AddBus(ctx => Bus.Factory.CreateUsingRabbitMq(rmqCfg =>
                     {
                         var serviceBusConfiguration = services
                             .BuildServiceProvider()
@@ -35,9 +35,9 @@
                         rmqCfg.ConfigureEndpoints(ctx);
                     }));
 
-                    busConfig(cfg);
+                    busConfig(serviceCollectionBusConfig, services.BuildServiceProvider().GetRequiredService<IConfiguration>());
 
-                    cfg.AddPublishMessageScheduler();
+                    serviceCollectionBusConfig.AddPublishMessageScheduler();
                 })
                 .AddMassTransitHostedService();
 
