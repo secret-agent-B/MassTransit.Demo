@@ -1,6 +1,6 @@
 # MassTransit.Demo
 
-I built this sample project to experiment with MassTransit Saga and for service to service communication patterns. Feel free to post an issue if you have improvements you'd like to propose.
+A sample project to experiment with MassTransit Saga and for service to service communication patterns. Feel free to post an issue if you have improvements you'd like to propose.
 
 ### Prereq
 
