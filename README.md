@@ -4,9 +4,15 @@ I built this sample project to experiment with MassTransit Saga and for service 
 
 ### Prereq
 
-1. Docker
+1. Docker 🐋
 2. .NET 6
 3. Visual Studio 2022 (recommended) or VS Code for debugging
+
+### APIs & Background Services
+
+1. Customers (Web API)
+2. Orders (Web API)
+3. Notifications (Hosted Service)
 
 ### Quick Links & API Hosts
 
@@ -18,7 +24,7 @@ I built this sample project to experiment with MassTransit Saga and for service 
 
 ### How to run the demo app
 
-There's a `docker-compose.yml` file within the root of the repository. Just fire up your command-line then type in `docker-compose up -d` to run everything.
+There's a `docker-compose.yml` file within the root of the repository. Just fire up your command-line then type in `docker-compose up -d` to run everything. _This repo should be ready to run and debug locally out of the box._
 
 ### How to connect to MongoDb using NoSQL client
 
@@ -31,11 +37,13 @@ There's a `docker-compose.yml` file within the root of the repository. Just fire
 
 Know that the `collections` dropdown will be empty but once you register a new user, you should see a `customers` collection right below it if expanded.
 
-### Curl commands
+### API Endpoints & CURL commands.
 
 > There are currently 2 commands that you can execute for now; Registration and (fake) activation. I plan to add more as I find more time to code.
 
-For user registration use the curl command below.
+#### User Registration
+
+For user registration use the curl command below. When a user registers a `CustomerRegisteredEvent` gets published to the bus (through MassTransit + RabbitMQ) for `Notifications` service to be consumed by `CustomerRegisteredConsumer`. In a real-world scenario; this service should send out an email or SMS to the user containing the activation code.
 
 ```
 curl --location --request POST 'https://localhost:5001/customers/register' \
@@ -47,6 +55,8 @@ curl --location --request POST 'https://localhost:5001/customers/register' \
     "Phone": "1-314-123-4567"
 }'
 ```
+
+#### User Activation
 
 Then after user registration, the account will be in a `PendingActivation` state. Use the curl command below to activate a user. **Do not forget t change the `<customer>` id to the new user's customer id.**
 
