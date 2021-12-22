@@ -16,12 +16,14 @@
             this.InstanceState(x => x.CurrentState, this.PendingActivation, this.Active, this.Inactive);
 
             this.Event(() => this.CustomerRegistrationEvent, c => c.CorrelateById(x => x.Message.Id));
+            this.Event(() => this.CustomerActivatedEvent, c => c.CorrelateBy((instance, context) => instance.CorrelationId == context.Message.Id));
 
             this.Initially(
                 this.When(this.CustomerRegistrationEvent)
                     .Then(ctx =>
                     {
                         ctx.Instance.CorrelationId = ctx.Data.Id;
+                        ctx.Instance.CreatedOn = ctx.Data.CreatedOn;
                         ctx.Instance.FirstName = ctx.Data.FirstName;
                         ctx.Instance.LastName = ctx.Data.LastName;
                         ctx.Instance.Email = ctx.Data.Email;
@@ -43,7 +45,7 @@
                 this.When(this.CustomerActivatedEvent)
                     .Then(ctx =>
                     {
-                        ctx.Instance.LastUpdatedOn = DateTime.UtcNow;
+                        ctx.Instance.ActivationDate = DateTime.UtcNow;
                     })
                     .TransitionTo(this.Active));
         }

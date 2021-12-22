@@ -27,12 +27,7 @@ builder
                     cfg.DatabaseName = "customersdb";
                     cfg.CollectionName = "customers";
 
-                    BsonClassMap.RegisterClassMap<Customer>(m =>
-                    {
-                        m.AutoMap();
-                        m.MapIdMember(d => d.CorrelationId)
-                            .SetSerializer(new GuidSerializer(GuidRepresentation.Standard));
-                    });
+                    BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
                 });
     });
 

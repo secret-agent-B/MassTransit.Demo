@@ -22,6 +22,7 @@
                 new
                 {
                     Id = Guid.NewGuid(),
+                    CreatedOn = DateTime.UtcNow,
                     command.FirstName,
                     command.LastName,
                     command.Email,

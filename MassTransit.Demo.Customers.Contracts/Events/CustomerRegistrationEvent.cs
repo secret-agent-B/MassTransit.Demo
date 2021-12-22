@@ -4,6 +4,8 @@
     {
         Guid Id { get; }
 
+        DateTime CreatedOn { get; }
+
         string FirstName { get; }
 
         string LastName { get; }
