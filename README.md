@@ -48,12 +48,7 @@ For user registration use the curl command below. When a user registers a `Custo
 ```
 curl --location --request POST 'https://localhost:5001/customers/register' \
 --header 'Content-Type: application/json' \
---data-raw '{
-    "FirstName": "Joe",
-    "LastName": "Smith",
-    "Email": "joe.smith@gmail.com",
-    "Phone": "1-314-123-4567"
-}'
+--data-raw '{ "FirstName": "Joe", "LastName": "Smith", "Email": "joe.smith@gmail.com", "Phone": "1-314-123-4567" }'
 ```
 
 #### User Activation
