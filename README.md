@@ -1,6 +1,6 @@
 # MassTransit.Demo
 
-I built this sample project to experiment with MassTransit Saga and for service to service communication patterns. Feel free to post an issue if you have improvements you'd like to propose.
+A sample project to experiment with MassTransit Saga, for service to service communication patterns and also explore tools that can help improve local development. Feel free to post an issue if you have improvements you'd like to propose. 
 
 ### Prereq
 
@@ -56,6 +56,5 @@ curl --location --request POST 'https://localhost:5001/customers/register' \
 Then after user registration, the account will be in a `PendingActivation` state. Use the curl command below to activate a user. **Do not forget t change the `<customer>` id to the new user's customer id.**
 
 ```
-curl --location --request GET 'https://localhost:5001/customers/activate/<customer-id>/test-activation' \
---data-raw ''
+curl --location --request GET 'https://localhost:5001/customers/activate/<customer-id>/test-activation'
 ```
