@@ -1,6 +1,7 @@
 using MassTransit.Demo.Communication.Extensions;
 using MassTransit.Demo.Shared.Extensions;
-
+using WebApiB.Consumers;
+ 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,9 +12,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMassTransitMiddleware((configurator, config) =>
 {
-
+    configurator.AddConsumer<GetUsersConsumer>();
 });
 builder.Services.ConfigureDemoServices<Program>();
+
+builder.Host
+    .AddConfiguration()
+    .AddSerilog();
 
 var app = builder.Build();
 

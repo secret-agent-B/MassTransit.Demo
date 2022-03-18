@@ -15,6 +15,10 @@ builder.Services.AddMassTransitMiddleware((configurator, config) =>
 });
 builder.Services.ConfigureDemoServices<Program>();
 
+builder.Host
+    .AddConfiguration()
+    .AddSerilog();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Requests.Contracts;
     using Requests.Contracts.DTOs;
-    using System.Text;
 
     [ApiController]
     [Route("[controller]")]
@@ -21,37 +20,23 @@
         [HttpGet]
         public async Task<IActionResult> GetReports([FromQuery]int roleId, [FromQuery] bool enabled)
         {
-            var busResponse = await this.getUsersClient.GetResponse<IList<IUser>>(new
-            {
-                RoleId = roleId,
-                Enabled = enabled
-            });
+            var busResponse = await this.getUsersClient.GetResponse<IListResponse<IUser>>(
+                new
+                {
+                    RoleId = roleId,
+                    Enabled = enabled
+                });
 
-            var reportBuilder = new StringBuilder();
-            reportBuilder.AppendLine("User Report");
-
-            foreach (var user in busResponse.Message)
-            {
-                reportBuilder.AppendLine($"------------------------");
-                reportBuilder.AppendLine($"Id: {user.Id}");
-                reportBuilder.AppendLine($"Name: {user.Name}");
-                reportBuilder.AppendLine($"Role: {user.Role}");
-
-                var isEnabled = user.IsEnabled ? "Yes" : "No";
-                reportBuilder.AppendLine($"IsEnabled: {isEnabled}");
-            }
-
-            reportBuilder.AppendLine($"------------------------");
-            return Ok(reportBuilder.ToString());
+            return Ok(busResponse.Message);
         }
 
         [HttpGet("error")]
-        public async Task<IActionResult> GetReportsWithErrorHandling([FromQuery] bool enabled)
+        public async Task<IActionResult> GetReportsWithErrorHandling()
         {
-            var (response, exception) = await this.getUsersClient.GetResponse<IList<IUser>, IMessageConsumerException>(new
+            var (response, exception) = await this.getUsersClient.GetResponse<IListResponse<IUser>, IMessageConsumerException>(new
             {
                 RoleId = 0, // Cause error
-                Enabled = enabled
+                Enabled = false
             });
 
             if (response.IsCompletedSuccessfully)

@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communicat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Communication.Tests", "src\SharedLib\MassTransit.Demo.Communication.Tests\MassTransit.Demo.Communication.Tests.csproj", "{DE0FE184-1FDB-4F4B-BBBD-4242ECCD2EEB}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Saga", "4. Saga", "{685D5D35-3CEC-4BB5-9EE5-206E706B15CB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Sending Message", "1. Sending Message", "{0F6EBC12-2289-47BB-82BE-07A52D8FE249}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Publishing", "2. Publishing", "{7D06A260-7B8F-4DE8-84C7-6A12CE3B8A2F}"
@@ -31,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MassTransit.Demo.Shared", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Events.Contracts", "src\2_Publishing_Events\Events.Contracts\Events.Contracts.csproj", "{B4324C10-3941-4826-832F-C50B2046FAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Requests.Contracts", "src\1_Sending_Message\Requests.Contracts\Requests.Contracts.csproj", "{2D76B303-6292-4126-8F83-9BF0A5EDFEBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Requests.Contracts", "src\1_Sending_Message\Requests.Contracts\Requests.Contracts.csproj", "{2D76B303-6292-4126-8F83-9BF0A5EDFEBB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Testing", "3. Testing", "{6CF79D87-5FA2-4D87-A119-F845B3D2B179}"
 EndProject

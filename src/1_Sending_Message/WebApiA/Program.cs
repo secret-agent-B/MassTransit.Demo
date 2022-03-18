@@ -12,9 +12,12 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddMassTransitMiddleware((configurator, config) =>
     {
-
     })
     .ConfigureDemoServices<Program>();
+
+builder.Host
+    .AddConfiguration()
+    .AddSerilog();
 
 var app = builder.Build();
 

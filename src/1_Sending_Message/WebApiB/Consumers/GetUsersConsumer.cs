@@ -4,6 +4,7 @@
     using MassTransit;
     using MassTransit.Demo.Communication.Contracts;
     using Requests.Contracts;
+    using Requests.Contracts.DTOs;
     using System.Threading.Tasks;
     using WebApiB.Domain;
 
@@ -26,7 +27,7 @@
         public async Task Consume(ConsumeContext<IGetUsers> context)
         {
             // role id is invalid, return an error message.
-            if (!roles.Any(x=>x.Id == context.Message.RoleId))
+            if (!roles.Any(x => x.Id == context.Message.RoleId))
             {
                 await context.RespondAsync<IMessageConsumerException>(new
                 {
@@ -35,23 +36,20 @@
             }
 
             // build the response with fake values.
-            var faker = new Faker();
-            var response = new List<User>();
+            var faker = new Faker<User>();
 
-            foreach (var id in Enumerable.Range(1, 10))
-            {
-                response.Add(new User
-                {
-                    Id = faker.Random.Int(),
-                    Name = faker.Person.FullName,
-                    Email = faker.Person.Email,
-                    IsEnabled = faker.PickRandom<bool>(),
-                    Role = roles.Single(x => x.Id == context.Message.RoleId).Name,
-                });
-            }
+            faker
+                .RuleFor(x=>x.Id, f=> f.Random.Int())
+                .RuleFor(x=>x.Name, f=> f.Person.FirstName)
+                .RuleFor(x=>x.Email, f=>f.Person.Email)
+                .RuleFor(x=>x.IsEnabled, context.Message.Enabled)
+                .RuleFor(x=>x.Role, roles.Single(x => x.Id == context.Message.RoleId).Name);
 
             // send the response.
-            await context.RespondAsync<IList<User>>(response);
+            await context.RespondAsync<IListResponse<IUser>>(new
+            {
+                Items = faker.Generate(10)
+            });
         }
     }
 }
