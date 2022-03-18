@@ -17,6 +17,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\SharedLib\MassTransit.Demo.Communication\MassTransit.Demo.Communication.csproj" />
 		<ProjectReference Include="..\..\SharedLib\MassTransit.Demo.Shared\MassTransit.Demo.Shared.csproj" />
+		<ProjectReference Include="..\Requests.Contracts\Requests.Contracts.csproj" />
 	</ItemGroup>
 
 </Project>
