@@ -2,6 +2,61 @@ version: '3.4'
 
 services:
 
+  masstransit.demo.webapia:
+    image: masstransit.demo.webapia
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/1_Sending_Message/WebApiA/Dockerfile
+    ports:
+      - "5010:443"
+    volumes:
+      - ./configs:/app/configs:ro
+
+  masstransit.demo.webapib:
+    image: masstransit.demo.webapib
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/1_Sending_Message/WebApiB/Dockerfile
+    ports:
+      - "5011:443"
+    volumes:
+      - ./configs:/app/configs:ro
+  
+  masstransit.demo.webapix:
+    image: masstransit.demo.webapix
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/2_Publishing_Events/WebApiX/Dockerfile
+    ports:
+      - "5020:443"
+    volumes:
+      - ./configs:/app/configs:ro
+  
+  masstransit.demo.webapiy:
+    image: masstransit.demo.webapiy
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/2_Publishing_Events/WebApiY/Dockerfile
+    ports:
+      - "5021:443"
+    volumes:
+      - ./configs:/app/configs:ro
+  
+  masstransit.demo.webapiz:
+    image: masstransit.demo.webapiz
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: src/2_Publishing_Events/WebApiY/Dockerfile
+    ports:
+      - "5022:443"
+    volumes:
+      - ./configs:/app/configs:ro
+
   masstransit.demo.customers:
     image: masstransit.demo.customers
     restart: unless-stopped
@@ -33,7 +88,7 @@ services:
       context: .
       dockerfile: src/Notifications/MassTransit.Demo.Notifications/Dockerfile
     volumes:
-      - ./configs:/app/configs:ro   
+      - ./configs:/app/configs:ro
 
   masstransit.demo.rabbitmq:
     image: rabbitmq:3.8.11-management-alpine
