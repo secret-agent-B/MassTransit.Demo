@@ -1,10 +1,6 @@
 using FluentValidation;
-using MassTransit;
 using MassTransit.Demo.Communication.Extensions;
 using MassTransit.Demo.Customers.Saga;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 var builder = WebApplication.CreateBuilder(args);
 
