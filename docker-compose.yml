@@ -24,16 +24,16 @@ services:
     volumes:
       - ./configs:/app/configs:ro      
 
-  #masstransit.demo.notifications:
-  #  image: masstransit.demo.notifications
-  #  restart: unless-stopped
-  #  environment:
-  #    - "ASPNETCORE_ENVIRONMENT=Development"
-  #  build:
-  #    context: .
-  #    dockerfile: src/Notifications/MassTransit.Demo.Notifications/Dockerfile
-  #  volumes:
-  #    - ./configs:/app/configs:ro   
+  masstransit.demo.notifications:
+    image: masstransit.demo.notifications
+    restart: unless-stopped
+    environment:
+      - "ASPNETCORE_ENVIRONMENT=Development"
+    build:
+      context: .
+      dockerfile: src/Notifications/MassTransit.Demo.Notifications/Dockerfile
+    volumes:
+      - ./configs:/app/configs:ro   
 
   masstransit.demo.rabbitmq:
     image: rabbitmq:3.8.11-management-alpine

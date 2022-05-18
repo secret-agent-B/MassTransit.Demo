@@ -1,6 +1,5 @@
 using FluentValidation;
 using MassTransit.Demo.Communication.Extensions;
-using MassTransit.Demo.Customers.Messaging;
 using MassTransit.Demo.Customers.Saga;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,7 +20,7 @@ builder
     .AddMassTransitMiddleware((busRegConfig, config) =>
     {
         // MassTransit PubSub
-        busRegConfig.ConfigureBus<CustomerBusRegistry>(config);
+        busRegConfig.ConfigureBus<Program>(config);
 
         // MassTransit Saga
         busRegConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);

@@ -21,10 +21,9 @@
             return services;
         }
 
-        public static IBusRegistrationConfigurator ConfigureBus<TConsumerRegistry>(
+        public static IBusRegistrationConfigurator ConfigureBus<TConsumerAssembly>(
             this IBusRegistrationConfigurator serviceCollectionBusConfig,
             IConfiguration config)
-            where TConsumerRegistry : IConsumerRegistry
         {
             var messagingConfigSection = config.GetSection("MessagingConfiguration");
             var messagingTransportConfiguration = messagingConfigSection.Get<MessagingTransportConfiguration>();
@@ -46,7 +45,7 @@
                     break;
             }
 
-            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerRegistry).Assembly);
+            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerAssembly).Assembly);
 
             return serviceCollectionBusConfig;
         }

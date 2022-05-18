@@ -1,5 +1,4 @@
 using MassTransit.Demo.Communication.Extensions;
-using MassTransit.Demo.Orders.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +18,7 @@ builder
     .AddMassTransitMiddleware((busRegConfig, config) =>
     {
         // MassTransit PubSub
-        busRegConfig.ConfigureBus<OrderBusRegistry>(config);
+        busRegConfig.ConfigureBus<Program>(config);
     });
 
 var app = builder.Build();
