@@ -1,6 +1,7 @@
 ﻿namespace MassTransit.Demo.Communication.Extensions
 {
     using MassTransit.Demo.Communication.Configurations;
+    using MassTransit.Demo.Communication.Contracts;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MongoDB.Bson;
@@ -11,16 +12,17 @@
     {
         public static IServiceCollection AddMassTransitMiddleware(
             this IServiceCollection services,
-            Action<IBusRegistrationConfigurator, IConfiguration> busRegistrationConfig)
+            Action<IBusRegistrationConfigurator, IConfiguration> busRegConfig)
         {
             var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-            services.AddMassTransit(serviceCollectionBusConfig => busRegistrationConfig(serviceCollectionBusConfig, config));
+            services.AddMassTransit(serviceCollectionBusConfig => busRegConfig(serviceCollectionBusConfig, config));
 
             return services;
         }
 
-        public static IBusRegistrationConfigurator ConfigureBus(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
+        public static IBusRegistrationConfigurator ConfigureBus<TConsumerRegistry>(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
+            where TConsumerRegistry : IConsumerRegistry
         {
             var messagingConfigSection = config.GetSection("MessagingConfiguration");
             var messagingTransportConfiguration = messagingConfigSection.Get<MessagingTransportConfiguration>();
@@ -30,17 +32,19 @@
             switch (messagingTransportConfiguration.Transport)
             {
                 case CommunicationTransport.RabbitMQ:
-                    serviceCollectionBusConfig.ConfigureRabbitMQ(messagingConfigSection);
+                    RabbitMQHelper.ConfigureRabbitMQ(serviceCollectionBusConfig, messagingConfigSection);
                     break;
 
                 case CommunicationTransport.AzureServiceBus:
-                    serviceCollectionBusConfig.ConfigureAzureServiceBus(messagingConfigSection);
+                    AzureServiceBusHelper.ConfigureAzureServiceBus(serviceCollectionBusConfig, messagingConfigSection);
                     break;
 
                 case CommunicationTransport.InMemory:
-                    serviceCollectionBusConfig.ConfigureInMemory();
+                    InMemoryBusHelper.ConfigureInMemory(serviceCollectionBusConfig);
                     break;
             }
+
+            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerRegistry).Assembly);
 
             return serviceCollectionBusConfig;
         }
@@ -67,55 +71,6 @@
                     });
 
             return serviceCollectionBusConfig;
-        }
-
-        private static void ConfigureRabbitMQ(this IBusRegistrationConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
-        {
-            var config = messagingConfigSection.Get<RabbitMQConfiguration>();
-
-            config.Validate();
-
-            serviceBusConfig.UsingRabbitMq(
-                 (ctx, rmqCfg) =>
-                 {
-                     rmqCfg.Host(
-                         new Uri($"amqp://{config.Host}"),
-                         hostConfig =>
-                         {
-                             hostConfig.Username(config.Username);
-                             hostConfig.Password(config.Password);
-                             hostConfig.Heartbeat(config.Heartbeat);
-
-                             // hostConfig.UseCluster(clusterConfig =>
-                             // {
-                             //     clusterConfig.Node("nodeX");
-                             //     clusterConfig.Node("nodeY");
-                             //     clusterConfig.Node("nodeZ");
-                             // });
-                         });
-                 });
-        }
-
-        private static void ConfigureAzureServiceBus(this IBusRegistrationConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
-        {
-            var config = messagingConfigSection.Get<ASBConfiguration>();
-
-            config.Validate();
-
-            serviceBusConfig.UsingAzureServiceBus(
-                (ctx, asbConfig) =>
-                {
-                    asbConfig.Host(config.ConnectionString);
-                });
-        }
-
-        private static void ConfigureInMemory(this IBusRegistrationConfigurator serviceBusConfig)
-        {
-            serviceBusConfig.UsingInMemory(
-                (ctx, inMemConfig) =>
-                {
-                    inMemConfig.ConfigureEndpoints(ctx);
-                });
         }
     }
 }

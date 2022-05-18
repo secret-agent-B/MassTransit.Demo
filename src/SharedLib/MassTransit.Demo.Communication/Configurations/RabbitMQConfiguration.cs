@@ -12,6 +12,8 @@ namespace MassTransit.Demo.Communication.Configurations
 
         public ushort Heartbeat { get; set; }
 
+        public string VirtualHost { get; set; } = "/";
+
         public int Port { get; set; }
 
         public void Validate()

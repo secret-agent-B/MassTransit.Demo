@@ -9,15 +9,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder
-    .Services
-    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
-    {
-    });
-
 builder.Host
     .AddConfiguration()
     .AddSerilog();
+
+builder
+    .Services
+    .AddMassTransitMiddleware((busRegConfig, config) =>
+    {
+        // MassTransit PubSub
+        busRegConfig.ConfigureBus(config);
+    });
 
 var app = builder.Build();
 

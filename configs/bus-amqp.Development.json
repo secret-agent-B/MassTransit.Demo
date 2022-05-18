@@ -3,7 +3,8 @@
     "Transport": "rabbitmq",
     "UserName": "guest",
     "Password": "guest",
-    "Host": "RabbitMQ",
+    "Host": "amqp://masstransit.demo.rabbitmq",
+    "VirtualHost": "/",
     "Heartbeat": 15,
     "Port": 15672
   },

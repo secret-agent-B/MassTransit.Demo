@@ -17,13 +17,13 @@ builder.Host
 
 builder
     .Services
-    .AddMassTransitMiddleware((serviceCollectionBusConfig, config) =>
+    .AddMassTransitMiddleware((busRegConfig, config) =>
     {
-        // MassTransit Saga
-        serviceCollectionBusConfig.ConfigureBus(config);
-
         // MassTransit PubSub
-        serviceCollectionBusConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
+        busRegConfig.ConfigureBus(config);
+
+        // MassTransit Saga
+        busRegConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
     })
     .AddValidatorsFromAssembly(typeof(Program).Assembly);
 
