@@ -2,8 +2,8 @@
 {
     using System.Threading.Tasks;
     using MassTransit.Demo.Notifications.Contracts.DTOs;
-    using MassTransit.Demo.Notifications.Contracts.Events;
     using MassTransit.Demo.Notifications.Contracts.Queries;
+    using MassTransit.Demo.Orders.Contracts.Events;
     using Serilog;
 
     public class OrderSubmittedConsumer
@@ -26,7 +26,7 @@
             });
 
             this._logger.Information(
-                "OrderSubmittedEvent consumed: Order {orderId} from customer ({customerName}) {customerId} for {totalAmount} was received,",
+                "OrderSubmittedEvent consumed: Order {orderId} from customer ({customerName}) {customerId} for {totalAmount} was received.",
                 context.Message.OrderId,
                 getCustomerResponse.Message.FirstName,
                 context.Message.TotalAmount,

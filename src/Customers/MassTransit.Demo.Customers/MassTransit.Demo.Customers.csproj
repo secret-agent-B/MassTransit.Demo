@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\Orders\MassTransit.Demo.Orders.Contracts\MassTransit.Demo.Orders.Contracts.csproj" />
 		<ProjectReference Include="..\..\SharedLib\MassTransit.Demo.Communication\MassTransit.Demo.Communication.csproj" />
 		<ProjectReference Include="..\MassTransit.Demo.Customers.Contracts\MassTransit.Demo.Customers.Contracts.csproj" />
 	</ItemGroup>

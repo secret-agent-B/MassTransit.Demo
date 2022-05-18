@@ -18,8 +18,6 @@
 
             services.AddMassTransit(busRegConfig =>
             {
-                busRegConfig.SetKebabCaseEndpointNameFormatter();
-
                 configure(busRegConfig, config);
             });
 

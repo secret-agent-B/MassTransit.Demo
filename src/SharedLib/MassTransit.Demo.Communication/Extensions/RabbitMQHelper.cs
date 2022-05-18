@@ -33,7 +33,7 @@
                              // });
                          });
 
-                     cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
+                     cfg.ConfigureEndpoints(ctx);
                  });
         }
     }

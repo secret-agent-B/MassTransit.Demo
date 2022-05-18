@@ -25,10 +25,12 @@
         public class Handler : IRequestHandler<Command, Order>
         {
             private readonly IPublishEndpoint _publishEndpoint;
+            private readonly IBus _bus;
 
-            public Handler(IPublishEndpoint publishEndpoint)
+            public Handler(IPublishEndpoint publishEndpoint, IBus bus)
             {
                 this._publishEndpoint = publishEndpoint;
+                this._bus = bus;
             }
 
             public async Task<Order> Handle(Command request, CancellationToken cancellationToken)
@@ -47,6 +49,13 @@
                 await this._publishEndpoint.Publish<OrderSubmittedEvent>(new
                 {
                     TotalAmount = order.TotalAmount,
+                    OrderId = order.Id,
+                    CustomerId = order.CustomerId
+                }, cancellationToken);
+
+                await this._bus.Publish<OrderSubmittedEvent>(new
+                {
+                    TotalAmount = order.TotalAmount + 10m,
                     OrderId = order.Id,
                     CustomerId = order.CustomerId
                 }, cancellationToken);

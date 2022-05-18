@@ -14,9 +14,8 @@
             serviceBusConfig.UsingAzureServiceBus(
                 (ctx, cfg) =>
                 {
-                    cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
                     cfg.Host(config.ConnectionString);
-                    cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
+                    cfg.ConfigureEndpoints(ctx);
                 });
         }
     }

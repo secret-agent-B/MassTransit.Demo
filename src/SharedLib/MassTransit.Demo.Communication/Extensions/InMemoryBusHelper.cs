@@ -7,8 +7,7 @@
             serviceBusConfig.UsingInMemory(
                 (ctx, cfg) =>
                 {
-                    cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
-                    cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
+                    cfg.ConfigureEndpoints(ctx);
                 });
         }
     }
