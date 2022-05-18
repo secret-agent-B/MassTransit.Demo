@@ -11,6 +11,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Host
+    .AddConfiguration()
+    .AddSerilog();
+
 builder
     .Services
     .AddMassTransitMiddleware((serviceCollectionBusConfig, config) =>
@@ -22,10 +26,6 @@ builder
         serviceCollectionBusConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
     })
     .AddValidatorsFromAssembly(typeof(Program).Assembly);
-
-builder.Host
-    .AddConfiguration()
-    .AddSerilog();
 
 var app = builder.Build();
 

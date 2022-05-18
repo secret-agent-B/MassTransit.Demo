@@ -1,7 +1,9 @@
 ﻿namespace MassTransit.Demo.Communication.Extensions
 {
+    using Automatonymous;
     using MassTransit.Demo.Communication.Configurations;
     using MassTransit.ExtensionsDependencyInjectionIntegration;
+    using MassTransit.Saga;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MongoDB.Bson;
@@ -74,30 +76,34 @@
         {
             var config = messagingConfigSection.Get<RabbitMQConfiguration>();
 
+            config.Validate();
+
             serviceBusConfig.UsingRabbitMq(
                  (ctx, rmqCfg) =>
                  {
                      rmqCfg.Host(
-                     new Uri($"amqp://{config.Host}"),
-                     hostConfig =>
-                     {
-                         hostConfig.Username(config.Username);
-                         hostConfig.Password(config.Password);
-                         hostConfig.Heartbeat(config.Heartbeat);
+                         new Uri($"amqp://{config.Host}"),
+                         hostConfig =>
+                         {
+                             hostConfig.Username(config.Username);
+                             hostConfig.Password(config.Password);
+                             hostConfig.Heartbeat(config.Heartbeat);
 
-                         // hostConfig.UseCluster(clusterConfig =>
-                         // {
-                         //     clusterConfig.Node("nodeX");
-                         //     clusterConfig.Node("nodeY");
-                         //     clusterConfig.Node("nodeZ");
-                         // });
-                     });
+                             // hostConfig.UseCluster(clusterConfig =>
+                             // {
+                             //     clusterConfig.Node("nodeX");
+                             //     clusterConfig.Node("nodeY");
+                             //     clusterConfig.Node("nodeZ");
+                             // });
+                         });
                  });
         }
 
         private static void ConfigureAzureServiceBus(this IServiceCollectionBusConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
         {
             var config = messagingConfigSection.Get<ASBConfiguration>();
+
+            config.Validate();
 
             serviceBusConfig.UsingAzureServiceBus(
                 (ctx, asbConfig) =>

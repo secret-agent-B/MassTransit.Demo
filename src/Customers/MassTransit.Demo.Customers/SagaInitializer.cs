@@ -1,6 +1,7 @@
 ﻿namespace MassTransit.Demo.Customers
 {
     using MassTransit.Demo.Customers.Contracts.Events;
+    using MassTransit.Topology.Topologies;
 
     internal static class SagaInitializer
     {
