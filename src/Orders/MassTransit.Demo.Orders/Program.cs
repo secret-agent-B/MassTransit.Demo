@@ -1,4 +1,5 @@
 using MassTransit.Demo.Communication.Extensions;
+using MassTransit.Demo.Orders.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +19,7 @@ builder
     .AddMassTransitMiddleware((busRegConfig, config) =>
     {
         // MassTransit PubSub
-        busRegConfig.ConfigureBus(config);
+        busRegConfig.ConfigureBus<OrderBusRegistry>(config);
     });
 
 var app = builder.Build();
@@ -34,3 +35,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+public partial class Program
+{ }
