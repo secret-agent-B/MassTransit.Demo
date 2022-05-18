@@ -2,14 +2,14 @@
 {
     public interface Order
     {
-        public Guid Id { get; }
+        Guid Id { get; }
 
-        public Guid CustomerId { get; }
+        Guid CustomerId { get; }
 
-        public DateTime CreatedOn { get; }
+        DateTime CreatedOn { get; }
 
-        public decimal Price { get; }
+        decimal TotalAmount { get; }
 
-        public List<string> ProductIds { get; set; }
+        List<string> ProductIds { get; }
     }
 }

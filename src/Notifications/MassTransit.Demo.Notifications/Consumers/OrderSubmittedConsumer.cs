@@ -7,17 +7,16 @@
     internal class OrderSubmittedConsumer
         : IConsumer<OrderSubmittedEvent>
     {
-        private readonly ILogger logger;
+        private readonly ILogger _logger;
 
         public OrderSubmittedConsumer(ILogger logger)
         {
-            this.logger = logger;
+            this._logger = logger;
         }
 
         public Task Consume(ConsumeContext<OrderSubmittedEvent> context)
         {
-            this.logger.Information("OrderSubmittedEvent {orderId} from customer {customerId} received", context.Message.OrderId, context.Message.CustomerId);
-
+            this._logger.Information("OrderSubmittedEvent {orderId} from customer {customerId} received", context.Message.OrderId, context.Message.CustomerId);
             return Task.CompletedTask;
         }
     }

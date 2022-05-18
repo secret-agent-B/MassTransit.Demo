@@ -2,7 +2,7 @@
 {
     public interface OrderSubmittedEvent
     {
-        decimal TotalPrice { get; }
+        decimal TotalAmount { get; }
 
         Guid OrderId { get; }
 
