@@ -7,7 +7,7 @@
             serviceBusConfig.UsingInMemory(
                 (ctx, inMemConfig) =>
                 {
-                    inMemConfig.ConfigureEndpoints(ctx);
+                    inMemConfig.ConfigureEndpoints(ctx, new CustomEndpointNameFormatter());
                 });
         }
     }

@@ -31,7 +31,7 @@
                              // });
                          });
 
-                     rmqCfg.ConfigureEndpoints(ctx);
+                     rmqCfg.ConfigureEndpoints(ctx, new CustomEndpointNameFormatter());
                  });
         }
     }

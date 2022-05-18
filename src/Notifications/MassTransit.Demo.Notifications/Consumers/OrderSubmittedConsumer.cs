@@ -20,7 +20,7 @@
 
         public async Task Consume(ConsumeContext<OrderSubmittedEvent> context)
         {
-            var getCustomerResponse = await this._getCustomerClient.GetResponse(new
+            var getCustomerResponse = await this._getCustomerClient.GetResponse<Customer>(new
             {
                 Id = context.Message.CustomerId
             });

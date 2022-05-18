@@ -19,7 +19,6 @@
             services.AddMassTransit(x =>
             {
                 x.SetKebabCaseEndpointNameFormatter();
-                x.SetSnakeCaseEndpointNameFormatter();
 
                 busRegConfig(x, config);
             });
