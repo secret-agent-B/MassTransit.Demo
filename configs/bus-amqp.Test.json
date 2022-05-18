@@ -1,0 +1,10 @@
+{
+  "MessagingConfiguration": {
+    "Transport": "inmemory"
+  },
+  "StateMachineConfiguration": {
+    "Connection": "mongodb://masstransit.demo.mongo",
+    "DatabaseName": "customers_db",
+    "Collection": "customers"
+  }
+}

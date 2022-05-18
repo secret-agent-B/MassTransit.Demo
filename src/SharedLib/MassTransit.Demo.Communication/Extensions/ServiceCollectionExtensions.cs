@@ -21,7 +21,9 @@
             return services;
         }
 
-        public static IBusRegistrationConfigurator ConfigureBus<TConsumerRegistry>(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
+        public static IBusRegistrationConfigurator ConfigureBus<TConsumerRegistry>(
+            this IBusRegistrationConfigurator serviceCollectionBusConfig,
+            IConfiguration config)
             where TConsumerRegistry : IConsumerRegistry
         {
             var messagingConfigSection = config.GetSection("MessagingConfiguration");
@@ -49,7 +51,9 @@
             return serviceCollectionBusConfig;
         }
 
-        public static IBusRegistrationConfigurator ConfigureSaga<TStateMachine, TState>(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
+        public static IBusRegistrationConfigurator ConfigureSaga<TStateMachine, TState>(
+            this IBusRegistrationConfigurator serviceCollectionBusConfig,
+            IConfiguration config)
             where TStateMachine : class, SagaStateMachine<TState>
             where TState : class, SagaStateMachineInstance, ISagaVersion
         {
