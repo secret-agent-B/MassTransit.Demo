@@ -12,10 +12,11 @@
             config.Validate();
 
             serviceBusConfig.UsingAzureServiceBus(
-                (ctx, asbConfig) =>
+                (ctx, cfg) =>
                 {
-                    asbConfig.Host(config.ConnectionString);
-                    asbConfig.ConfigureEndpoints(ctx, new CustomEndpointNameFormatter());
+                    cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
+                    cfg.Host(config.ConnectionString);
+                    cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
                 });
         }
     }

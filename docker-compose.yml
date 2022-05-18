@@ -5,6 +5,10 @@ services:
   masstransit.demo.customers:
     image: masstransit.demo.customers
     restart: unless-stopped
+    depends_on:
+      - masstransit.demo.rabbitmq
+      - masstransit.demo.mongo
+      - masstransit.demo.seq
     build:
       context: .
       dockerfile: src/Customers/MassTransit.Demo.Customers/Dockerfile
@@ -16,6 +20,9 @@ services:
   masstransit.demo.orders:
     image: masstransit.demo.orders
     restart: unless-stopped
+    depends_on:
+      - masstransit.demo.rabbitmq
+      - masstransit.demo.seq
     build:
       context: .
       dockerfile: src/Orders/MassTransit.Demo.Orders/Dockerfile
@@ -27,6 +34,9 @@ services:
   masstransit.demo.notifications:
     image: masstransit.demo.notifications
     restart: unless-stopped
+    depends_on:
+      - masstransit.demo.rabbitmq
+      - masstransit.demo.seq
     environment:
       - "ASPNETCORE_ENVIRONMENT=Development"
     build:

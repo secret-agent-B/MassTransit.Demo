@@ -5,9 +5,10 @@
         internal static void ConfigureInMemory(this IBusRegistrationConfigurator serviceBusConfig)
         {
             serviceBusConfig.UsingInMemory(
-                (ctx, inMemConfig) =>
+                (ctx, cfg) =>
                 {
-                    inMemConfig.ConfigureEndpoints(ctx, new CustomEndpointNameFormatter());
+                    cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
+                    cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
                 });
         }
     }

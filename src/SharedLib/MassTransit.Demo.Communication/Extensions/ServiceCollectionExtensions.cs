@@ -12,22 +12,22 @@
     {
         public static IServiceCollection AddMassTransitMiddleware(
             this IServiceCollection services,
-            Action<IBusRegistrationConfigurator, IConfiguration> busRegConfig)
+            Action<IBusRegistrationConfigurator, IConfiguration> configure)
         {
             var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-            services.AddMassTransit(x =>
+            services.AddMassTransit(busRegConfig =>
             {
-                x.SetKebabCaseEndpointNameFormatter();
+                busRegConfig.SetKebabCaseEndpointNameFormatter();
 
-                busRegConfig(x, config);
+                configure(busRegConfig, config);
             });
 
             return services;
         }
 
         public static IBusRegistrationConfigurator ConfigureBus<TConsumerAssembly>(
-            this IBusRegistrationConfigurator serviceCollectionBusConfig,
+            this IBusRegistrationConfigurator busRegConfig,
             IConfiguration config)
         {
             var messagingConfigSection = config.GetSection("MessagingConfiguration");
@@ -35,28 +35,28 @@
 
             messagingTransportConfiguration.Validate();
 
-            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerAssembly).Assembly);
+            busRegConfig.AddConsumers(typeof(TConsumerAssembly).Assembly);
 
             switch (messagingTransportConfiguration.Transport)
             {
                 case CommunicationTransport.RabbitMQ:
-                    RabbitMQHelper.ConfigureRabbitMQ(serviceCollectionBusConfig, messagingConfigSection);
+                    RabbitMQHelper.ConfigureRabbitMQ(busRegConfig, messagingConfigSection);
                     break;
 
                 case CommunicationTransport.AzureServiceBus:
-                    AzureServiceBusHelper.ConfigureAzureServiceBus(serviceCollectionBusConfig, messagingConfigSection);
+                    AzureServiceBusHelper.ConfigureAzureServiceBus(busRegConfig, messagingConfigSection);
                     break;
 
                 case CommunicationTransport.InMemory:
-                    InMemoryBusHelper.ConfigureInMemory(serviceCollectionBusConfig);
+                    InMemoryBusHelper.ConfigureInMemory(busRegConfig);
                     break;
             }
 
-            return serviceCollectionBusConfig;
+            return busRegConfig;
         }
 
         public static IBusRegistrationConfigurator ConfigureSaga<TStateMachine, TState>(
-            this IBusRegistrationConfigurator serviceCollectionBusConfig,
+            this IBusRegistrationConfigurator busRegConfig,
             IConfiguration config)
             where TStateMachine : class, SagaStateMachine<TState>
             where TState : class, SagaStateMachineInstance, ISagaVersion
@@ -67,7 +67,7 @@
 
             stateMachineConfig.Validate();
 
-            serviceCollectionBusConfig.AddSagaStateMachine<TStateMachine, TState>()
+            busRegConfig.AddSagaStateMachine<TStateMachine, TState>()
                 .MongoDbRepository(
                     cfg =>
                     {
@@ -78,7 +78,7 @@
                         BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
                     });
 
-            return serviceCollectionBusConfig;
+            return busRegConfig;
         }
     }
 }

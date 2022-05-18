@@ -12,9 +12,11 @@
             config.Validate();
 
             serviceBusConfig.UsingRabbitMq(
-                 (ctx, rmqCfg) =>
+                 (ctx, cfg) =>
                  {
-                     rmqCfg.Host(
+                     cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
+
+                     cfg.Host(
                          new Uri(config.Host),
                          config.VirtualHost,
                          hostConfig =>
@@ -31,7 +33,7 @@
                              // });
                          });
 
-                     rmqCfg.ConfigureEndpoints(ctx, new CustomEndpointNameFormatter());
+                     cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter(false));
                  });
         }
     }

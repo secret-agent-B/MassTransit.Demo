@@ -1,9 +1,9 @@
 ﻿namespace MassTransit.Demo.Notifications.Consumers
 {
     using System.Threading.Tasks;
-    using MassTransit.Demo.Customers.Contracts.Queries;
-    using MassTransit.Demo.Customers.Contracts.DTOs;
-    using MassTransit.Demo.Orders.Contracts.Events;
+    using MassTransit.Demo.Notifications.Contracts.DTOs;
+    using MassTransit.Demo.Notifications.Contracts.Events;
+    using MassTransit.Demo.Notifications.Contracts.Queries;
     using Serilog;
 
     public class OrderSubmittedConsumer
