@@ -16,7 +16,13 @@
         {
             var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-            services.AddMassTransit(serviceCollectionBusConfig => busRegConfig(serviceCollectionBusConfig, config));
+            services.AddMassTransit(x =>
+            {
+                x.SetKebabCaseEndpointNameFormatter();
+                x.SetSnakeCaseEndpointNameFormatter();
+
+                busRegConfig(x, config);
+            });
 
             return services;
         }
@@ -29,6 +35,8 @@
             var messagingTransportConfiguration = messagingConfigSection.Get<MessagingTransportConfiguration>();
 
             messagingTransportConfiguration.Validate();
+
+            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerAssembly).Assembly);
 
             switch (messagingTransportConfiguration.Transport)
             {
@@ -44,8 +52,6 @@
                     InMemoryBusHelper.ConfigureInMemory(serviceCollectionBusConfig);
                     break;
             }
-
-            serviceCollectionBusConfig.AddConsumers(typeof(TConsumerAssembly).Assembly);
 
             return serviceCollectionBusConfig;
         }

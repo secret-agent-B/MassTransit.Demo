@@ -15,20 +15,20 @@
                 this.ProductIds = new List<string>();
             }
 
-            public Guid CustomerId { get; }
+            public Guid CustomerId { get; set; }
 
-            public decimal TotalAmount { get; }
+            public decimal TotalAmount { get; set; }
 
-            public List<string> ProductIds { get; }
+            public List<string> ProductIds { get; set; }
         }
 
         public class Handler : IRequestHandler<Command, Order>
         {
-            private readonly IBus _bus;
+            private readonly IPublishEndpoint _publishEndpoint;
 
-            public Handler(IBus bus)
+            public Handler(IPublishEndpoint publishEndpoint)
             {
-                this._bus = bus;
+                this._publishEndpoint = publishEndpoint;
             }
 
             public async Task<Order> Handle(Command request, CancellationToken cancellationToken)
@@ -44,7 +44,7 @@
                 };
 
                 // Publish an event to the bus with the new order info
-                await this._bus.Publish<OrderSubmittedEvent>(new
+                await this._publishEndpoint.Publish<OrderSubmittedEvent>(new
                 {
                     TotalAmount = order.TotalAmount,
                     OrderId = order.Id,

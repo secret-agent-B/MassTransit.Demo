@@ -30,6 +30,8 @@
                              //     clusterConfig.Node("nodeZ");
                              // });
                          });
+
+                     rmqCfg.ConfigureEndpoints(ctx);
                  });
         }
     }

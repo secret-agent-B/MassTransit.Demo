@@ -1,4 +1,5 @@
 using MassTransit.Demo.Communication.Extensions;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,7 +20,8 @@ builder
     {
         // MassTransit PubSub
         busRegConfig.ConfigureBus<Program>(config);
-    });
+    })
+    .AddMediatR(typeof(Program).Assembly);
 
 var app = builder.Build();
 

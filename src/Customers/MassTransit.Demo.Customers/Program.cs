@@ -23,7 +23,7 @@ builder
         busRegConfig.ConfigureBus<Program>(config);
 
         // MassTransit Saga
-        busRegConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
+        // busRegConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
     })
     .AddValidatorsFromAssembly(typeof(Program).Assembly);
 

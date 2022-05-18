@@ -2,7 +2,6 @@
 {
     using System.Threading.Tasks;
     using Bogus;
-    using MassTransit.Demo.Communication.Contracts;
     using MassTransit.Demo.Customers.Contracts.DTOs;
     using MassTransit.Demo.Customers.Contracts.Queries;
 
@@ -13,12 +12,7 @@
         {
             if (context.Message.Id == Guid.Empty)
             {
-                await context.RespondAsync<MessagingConsumerException>(new
-                {
-                    Errors = new[] { $"Customer Id is invalid {context.Message.Id}." }
-                });
-
-                return;
+                throw new Exception($"Customer Id is invalid {context.Message.Id}.");
             }
 
             var faker = new Faker();

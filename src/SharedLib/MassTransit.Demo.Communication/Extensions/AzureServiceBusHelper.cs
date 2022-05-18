@@ -15,6 +15,7 @@
                 (ctx, asbConfig) =>
                 {
                     asbConfig.Host(config.ConnectionString);
+                    asbConfig.ConfigureEndpoints(ctx);
                 });
         }
     }
