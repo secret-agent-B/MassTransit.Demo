@@ -1,9 +1,6 @@
 ﻿namespace MassTransit.Demo.Communication.Extensions
 {
-    using Automatonymous;
     using MassTransit.Demo.Communication.Configurations;
-    using MassTransit.ExtensionsDependencyInjectionIntegration;
-    using MassTransit.Saga;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using MongoDB.Bson;
@@ -14,16 +11,16 @@
     {
         public static IServiceCollection AddMassTransitMiddleware(
             this IServiceCollection services,
-            Action<IServiceCollectionBusConfigurator, IConfiguration> busConfig)
+            Action<IBusRegistrationConfigurator, IConfiguration> busRegistrationConfig)
         {
             var config = services.BuildServiceProvider().GetRequiredService<IConfiguration>();
 
-            services.AddMassTransit(serviceCollectionBusConfig => serviceCollectionBusConfig.ConfigureBus(config));
+            services.AddMassTransit(serviceCollectionBusConfig => busRegistrationConfig(serviceCollectionBusConfig, config));
 
             return services;
         }
 
-        public static IServiceCollectionBusConfigurator ConfigureBus(this IServiceCollectionBusConfigurator serviceCollectionBusConfig, IConfiguration config)
+        public static IBusRegistrationConfigurator ConfigureBus(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
         {
             var messagingConfigSection = config.GetSection("MessagingConfiguration");
             var messagingTransportConfiguration = messagingConfigSection.Get<MessagingTransportConfiguration>();
@@ -48,7 +45,7 @@
             return serviceCollectionBusConfig;
         }
 
-        public static IServiceCollectionBusConfigurator ConfigureSaga<TStateMachine, TState>(this IServiceCollectionBusConfigurator serviceCollectionBusConfig, IConfiguration config)
+        public static IBusRegistrationConfigurator ConfigureSaga<TStateMachine, TState>(this IBusRegistrationConfigurator serviceCollectionBusConfig, IConfiguration config)
             where TStateMachine : class, SagaStateMachine<TState>
             where TState : class, SagaStateMachineInstance, ISagaVersion
         {
@@ -72,7 +69,7 @@
             return serviceCollectionBusConfig;
         }
 
-        private static void ConfigureRabbitMQ(this IServiceCollectionBusConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
+        private static void ConfigureRabbitMQ(this IBusRegistrationConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
         {
             var config = messagingConfigSection.Get<RabbitMQConfiguration>();
 
@@ -99,7 +96,7 @@
                  });
         }
 
-        private static void ConfigureAzureServiceBus(this IServiceCollectionBusConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
+        private static void ConfigureAzureServiceBus(this IBusRegistrationConfigurator serviceBusConfig, IConfigurationSection messagingConfigSection)
         {
             var config = messagingConfigSection.Get<ASBConfiguration>();
 
@@ -112,7 +109,7 @@
                 });
         }
 
-        private static void ConfigureInMemory(this IServiceCollectionBusConfigurator serviceBusConfig)
+        private static void ConfigureInMemory(this IBusRegistrationConfigurator serviceBusConfig)
         {
             serviceBusConfig.UsingInMemory(
                 (ctx, inMemConfig) =>
