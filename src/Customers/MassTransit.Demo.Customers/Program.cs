@@ -17,19 +17,13 @@ builder.Services.AddSwaggerGen();
 
 builder
     .Services
-    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
+    .AddMassTransitMiddleware((serviceCollectionBusConfig, config) =>
     {
-        serviceCollectionBusConfig
-            .AddSagaStateMachine<CustomerStateMachine, Customer>()
-            .MongoDbRepository( 
-                cfg =>
-                {
-                    cfg.Connection = "mongodb://masstransit.demo.mongo";
-                    cfg.DatabaseName = "customersdb";
-                    cfg.CollectionName = "customers";
+        // MassTransit Saga
+        serviceCollectionBusConfig.ConfigureBus(config);
 
-                    BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
-                });
+        // MassTransit PubSub
+        serviceCollectionBusConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
     })
     .AddValidatorsFromAssembly(typeof(Program).Assembly);
 
