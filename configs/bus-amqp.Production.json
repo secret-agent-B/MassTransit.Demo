@@ -1,0 +1,11 @@
+{
+  "MessagingConfiguration": {
+    "Transport": "azureservicebus",
+    "ConnectionString": "asb//connection-string/"
+  },
+  "StateMachineConfiguration": {
+    "Connection": "mongodb://masstransit.demo.mongo",
+    "DatabaseName": "customers_db",
+    "Collection": "customers"
+  }
+}

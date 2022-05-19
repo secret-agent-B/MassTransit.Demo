@@ -2,8 +2,8 @@
 {
     public interface CustomerActvationEvent
     {
-        public Guid Id { get; set; }
+        Guid Id { get; set; }
 
-        public string ActivationKey { get; set; }
+        string ActivationKey { get; set; }
     }
 }

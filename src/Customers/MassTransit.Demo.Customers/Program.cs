@@ -1,10 +1,6 @@
 using FluentValidation;
-using MassTransit;
 using MassTransit.Demo.Communication.Extensions;
 using MassTransit.Demo.Customers.Saga;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.Serializers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,27 +11,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder
-    .Services
-    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
-    {
-        serviceCollectionBusConfig
-            .AddSagaStateMachine<CustomerStateMachine, Customer>()
-            .MongoDbRepository( 
-                cfg =>
-                {
-                    cfg.Connection = "mongodb://masstransit.demo.mongo";
-                    cfg.DatabaseName = "customersdb";
-                    cfg.CollectionName = "customers";
-
-                    BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
-                });
-    })
-    .AddValidatorsFromAssembly(typeof(Program).Assembly);
-
 builder.Host
     .AddConfiguration()
     .AddSerilog();
+
+builder
+    .Services
+    .AddMassTransitMiddleware((busRegConfig, config) =>
+    {
+        // MassTransit PubSub
+        busRegConfig.ConfigureBus<Program>(config);
+
+        // MassTransit Saga
+        // busRegConfig.ConfigureSaga<CustomerStateMachine, Customer>(config);
+    })
+    .AddValidatorsFromAssembly(typeof(Program).Assembly);
 
 var app = builder.Build();
 

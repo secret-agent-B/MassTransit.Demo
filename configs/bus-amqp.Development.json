@@ -1,9 +1,16 @@
 {
-  "ServiceBusConfiguration": {
-    "Host": "masstransit.demo.rabbitmq",
-    "Port": 15672,
-    "Username": "guest",
+  "MessagingConfiguration": {
+    "Transport": "rabbitmq",
+    "UserName": "guest",
     "Password": "guest",
-    "Heartbeat": 15
+    "Host": "amqp://masstransit.demo.rabbitmq",
+    "VirtualHost": "/",
+    "Heartbeat": 15,
+    "Port": 15672
+  },
+  "StateMachineConfiguration": {
+    "Connection": "mongodb://masstransit.demo.mongo",
+    "DatabaseName": "customers_db",
+    "Collection": "customers"
   }
 }

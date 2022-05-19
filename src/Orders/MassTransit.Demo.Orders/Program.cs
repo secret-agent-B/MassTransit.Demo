@@ -1,4 +1,5 @@
 using MassTransit.Demo.Communication.Extensions;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,15 +10,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder
-    .Services
-    .AddMassTransitMiddleware((serviceCollectionBusConfig, configuration) =>
-    {
-    });
-
 builder.Host
     .AddConfiguration()
     .AddSerilog();
+
+builder
+    .Services
+    .AddMassTransitMiddleware((busRegConfig, config) =>
+    {
+        // MassTransit PubSub
+        busRegConfig.ConfigureBus<Program>(config);
+    })
+    .AddMediatR(typeof(Program).Assembly);
 
 var app = builder.Build();
 
@@ -32,3 +36,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
+
+public partial class Program
+{ }
