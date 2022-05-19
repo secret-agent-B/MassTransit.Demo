@@ -14,7 +14,7 @@
             serviceBusConfig.UsingRabbitMq(
                  (ctx, cfg) =>
                  {
-                     cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
+                     // cfg.MessageTopology.SetEntityNameFormatter(new EntityNameFormatter());
 
                      cfg.Host(
                          new Uri(config.Host),
