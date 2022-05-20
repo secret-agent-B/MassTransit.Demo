@@ -24,12 +24,10 @@
 
         public class Handler : IRequestHandler<Command, Order>
         {
-            private readonly IPublishEndpoint _publishEndpoint;
             private readonly IBus _bus;
 
-            public Handler(IPublishEndpoint publishEndpoint, IBus bus)
+            public Handler(IBus bus)
             {
-                this._publishEndpoint = publishEndpoint;
                 this._bus = bus;
             }
 
@@ -44,15 +42,6 @@
                     ProductIds = request.ProductIds,
                     TotalAmount = request.TotalAmount
                 };
-
-                // TODO: Only received by just 1 consumer.
-                // Publish an event to the bus with the new order info
-                // await this._publishEndpoint.Publish<OrderSubmittedEvent>(new
-                // {
-                //     TotalAmount = order.TotalAmount,
-                //     OrderId = order.Id,
-                //     CustomerId = order.CustomerId
-                // }, cancellationToken);
 
                 await this._bus.Publish<OrderSubmittedEvent>(new
                 {
